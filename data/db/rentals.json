@@ -1,0 +1,54 @@
+{
+  "AB024D7D": {
+    "id": "AB024D7D",
+    "vehicle": {
+      "plate": "DEF-202",
+      "model": "Honda Civic",
+      "year": 2023,
+      "daily_rate": 60.0,
+      "vehicle_type": "CAR",
+      "available": false,
+      "subtype": "Car",
+      "doors": 4
+    },
+    "customer": {
+      "id": "2EC4EE29",
+      "name": "Ana García",
+      "email": "ana@mail.com",
+      "license": "GT-001234"
+    },
+    "days": 3,
+    "km_estimate": 150,
+    "cost": 180.0,
+    "policy_id": "EXT-DEF-202-6YSDJB",
+    "pricing_type": "Por día (tarifa_diaria × días)",
+    "status": "ACTIVE",
+    "start_date": "2026-03-04"
+  },
+  "006D7159": {
+    "id": "006D7159",
+    "vehicle": {
+      "plate": "TRK-111",
+      "model": "Chevrolet Silverado",
+      "year": 2020,
+      "daily_rate": 70.0,
+      "vehicle_type": "TRUCK",
+      "available": true,
+      "subtype": "Truck",
+      "payload_kg": 1000.0
+    },
+    "customer": {
+      "id": "E9FAEC7F",
+      "name": "Luis Pérez",
+      "email": "luis@mail.com",
+      "license": "GT-005678"
+    },
+    "days": 5,
+    "km_estimate": 300,
+    "cost": 350.0,
+    "policy_id": "EXT-TRK-111-9HAB2C",
+    "pricing_type": "Por día (tarifa_diaria × días)",
+    "status": "COMPLETED",
+    "start_date": "2026-03-04"
+  }
+}

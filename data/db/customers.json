@@ -1,0 +1,20 @@
+{
+  "2EC4EE29": {
+    "id": "2EC4EE29",
+    "name": "Ana García",
+    "email": "ana@mail.com",
+    "license": "GT-001234"
+  },
+  "E9FAEC7F": {
+    "id": "E9FAEC7F",
+    "name": "Luis Pérez",
+    "email": "luis@mail.com",
+    "license": "GT-005678"
+  },
+  "DBF2BCAD": {
+    "id": "DBF2BCAD",
+    "name": "María López",
+    "email": "maria@mail.com",
+    "license": "GT-009012"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "ABC-001": {
+    "plate": "ABC-001",
+    "model": "Toyota Corolla",
+    "year": 2022,
+    "daily_rate": 55.0,
+    "vehicle_type": "CAR",
+    "available": true,
+    "subtype": "Car",
+    "doors": 4
+  },
+  "DEF-202": {
+    "plate": "DEF-202",
+    "model": "Honda Civic",
+    "year": 2023,
+    "daily_rate": 60.0,
+    "vehicle_type": "CAR",
+    "available": false,
+    "subtype": "Car",
+    "doors": 4
+  },
+  "XYZ-999": {
+    "plate": "XYZ-999",
+    "model": "Ford Explorer",
+    "year": 2021,
+    "daily_rate": 85.0,
+    "vehicle_type": "SUV",
+    "available": true,
+    "subtype": "SUV",
+    "awd": true
+  },
+  "GHI-444": {
+    "plate": "GHI-444",
+    "model": "Jeep Grand Cherokee",
+    "year": 2022,
+    "daily_rate": 95.0,
+    "vehicle_type": "SUV",
+    "available": true,
+    "subtype": "SUV",
+    "awd": true
+  },
+  "TRK-111": {
+    "plate": "TRK-111",
+    "model": "Chevrolet Silverado",
+    "year": 2020,
+    "daily_rate": 70.0,
+    "vehicle_type": "TRUCK",
+    "available": true,
+    "subtype": "Truck",
+    "payload_kg": 1000.0
+  },
+  "TRK-222": {
+    "plate": "TRK-222",
+    "model": "Ford F-150",
+    "year": 2023,
+    "daily_rate": 75.0,
+    "vehicle_type": "TRUCK",
+    "available": true,
+    "subtype": "Truck",
+    "payload_kg": 1000.0
+  }
+}
