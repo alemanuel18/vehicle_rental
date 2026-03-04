@@ -21,13 +21,10 @@ python --version
 ## Estructura del proyecto
 
 ```
-alquiler_vehiculos_proyecto/
-│
-├── requirements.txt                     ← Dependencias del proyecto
-├── .gitignore                           ← Archivos a ignorar en Git
-│
 └── vehicle_rental/
     │
+    ├── requirements.txt                     ← Dependencias del proyecto
+    ├── .gitignore                           ← Archivos a ignorar en Git
     ├── main.py                          ← CLI: punto de entrada consola
     │
     ├── api/
