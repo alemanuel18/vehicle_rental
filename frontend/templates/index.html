@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FleetOS — Sistema de Alquiler</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=DM+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<!-- ══════════════════ SIDEBAR ══════════════════ -->
+<aside id="sidebar">
+  <div class="sidebar-logo">
+    <span class="logo-icon">🚗</span>
+    <div class="logo-text">FleetOS</div>
+    <div class="logo-sub">Gestión de Alquiler</div>
+  </div>
+
+  <nav>
+    <div class="nav-section">
+      <div class="nav-label">Principal</div>
+      <div class="nav-item active" data-page="dashboard">
+        <span class="nav-icon">◈</span> Dashboard
+      </div>
+    </div>
+    <div class="nav-section">
+      <div class="nav-label">Gestión</div>
+      <div class="nav-item" data-page="vehicles">
+        <span class="nav-icon">🚙</span> Vehículos
+      </div>
+      <div class="nav-item" data-page="customers">
+        <span class="nav-icon">👤</span> Clientes
+      </div>
+      <div class="nav-item" data-page="rentals">
+        <span class="nav-icon">📋</span> Reservas
+      </div>
+    </div>
+  </nav>
+
+  <div class="sidebar-footer">
+    <div class="strategy-badge">
+      <div class="sb-label">Estrategia activa</div>
+      <div class="sb-value" id="sidebar-strategy">—</div>
+    </div>
+  </div>
+</aside>
+
+<!-- ══════════════════ MAIN ══════════════════ -->
+<div id="main">
+
+  <!-- Topbar -->
+  <header id="topbar">
+    <div class="topbar-title" id="topbar-title">Dashboard</div>
+    <div class="topbar-actions">
+      <button class="btn btn-ghost" id="btn-strategy">⚙ Estrategia</button>
+      <button class="btn btn-primary" id="btn-new-rental">+ Nueva Reserva</button>
+    </div>
+  </header>
+
+  <!-- Content -->
+  <div id="content">
+
+    <!-- ══════ PAGE: DASHBOARD ══════ -->
+    <div class="page active" id="page-dashboard">
+
+      <!-- Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">🚙</div>
+          <div class="stat-value" id="stat-vehicles">—</div>
+          <div class="stat-label">Vehículos</div>
+          <div class="stat-sub"><span id="stat-available">—</span> disponibles</div>
+        </div>
+        <div class="stat-card green">
+          <div class="stat-icon">👤</div>
+          <div class="stat-value" id="stat-customers">—</div>
+          <div class="stat-label">Clientes</div>
+        </div>
+        <div class="stat-card yellow">
+          <div class="stat-icon">📋</div>
+          <div class="stat-value" id="stat-active">—</div>
+          <div class="stat-label">Reservas Activas</div>
+          <div class="stat-sub"><span id="stat-completed">—</span> completadas</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">💰</div>
+          <div class="stat-value" id="stat-revenue">—</div>
+          <div class="stat-label">Ingresos Totales</div>
+          <div class="stat-sub" style="font-size:.72rem;color:var(--text3)">Estrategia: <span id="stat-strategy">—</span></div>
+        </div>
+      </div>
+
+      <!-- Charts -->
+      <div class="charts-row">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Estado de Flota</span></div>
+          <div id="donut-vehicles"></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">Estado de Reservas</span></div>
+          <div id="donut-rentals"></div>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="card">
+          <div class="card-header"><span class="card-title">Vehículos por Tipo</span></div>
+          <div id="bar-types"></div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Reservas Recientes</span>
+          </div>
+          <div id="recent-rentals"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══════ PAGE: VEHICLES ══════ -->
+    <div class="page" id="page-vehicles">
+      <div class="toolbar">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="v-search" placeholder="Buscar por matrícula o modelo…">
+        </div>
+        <select class="filter-select" id="v-type-filter">
+          <option value="">Todos los tipos</option>
+          <option value="Automóvil">Automóvil</option>
+          <option value="Camioneta">Camioneta</option>
+          <option value="SUV">SUV</option>
+        </select>
+        <select class="filter-select" id="v-status-filter">
+          <option value="">Todos los estados</option>
+          <option value="available">Disponible</option>
+          <option value="unavailable">Ocupado</option>
+        </select>
+        <button class="btn btn-primary" id="btn-new-vehicle">+ Agregar Vehículo</button>
+      </div>
+
+      <div class="card">
+        <div class="table-wrap">
+          <table id="vehicles-table">
+            <thead>
+              <tr>
+                <th data-col="plate">Matrícula <span class="sort-arrow">↕</span></th>
+                <th data-col="model">Modelo <span class="sort-arrow">↕</span></th>
+                <th data-col="year">Año <span class="sort-arrow">↕</span></th>
+                <th>Tipo</th>
+                <th data-col="daily_rate">Tarifa/día <span class="sort-arrow">↕</span></th>
+                <th>Estado</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody><tr><td colspan="7" class="no-results">Cargando…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="vehicles-pagination"></div>
+      </div>
+    </div>
+
+    <!-- ══════ PAGE: CUSTOMERS ══════ -->
+    <div class="page" id="page-customers">
+      <div class="toolbar">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="c-search" placeholder="Buscar por nombre, email o ID…">
+        </div>
+        <button class="btn btn-primary" id="btn-new-customer">+ Agregar Cliente</button>
+      </div>
+
+      <div class="card">
+        <div class="table-wrap">
+          <table id="customers-table">
+            <thead>
+              <tr>
+                <th data-col="id">ID <span class="sort-arrow">↕</span></th>
+                <th data-col="name">Nombre <span class="sort-arrow">↕</span></th>
+                <th data-col="email">Email <span class="sort-arrow">↕</span></th>
+                <th>Licencia</th>
+              </tr>
+            </thead>
+            <tbody><tr><td colspan="4" class="no-results">Cargando…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="customers-pagination"></div>
+      </div>
+    </div>
+
+    <!-- ══════ PAGE: RENTALS ══════ -->
+    <div class="page" id="page-rentals">
+      <div class="toolbar">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="r-search" placeholder="Buscar por ID, vehículo o cliente…">
+        </div>
+        <select class="filter-select" id="r-status-filter">
+          <option value="">Todos los estados</option>
+          <option value="Activa">Activa</option>
+          <option value="Completada">Completada</option>
+          <option value="Cancelada">Cancelada</option>
+        </select>
+      </div>
+
+      <div class="card">
+        <div class="table-wrap">
+          <table id="rentals-table">
+            <thead>
+              <tr>
+                <th data-col="id">ID <span class="sort-arrow">↕</span></th>
+                <th>Vehículo</th>
+                <th>Cliente</th>
+                <th>Días / km</th>
+                <th data-col="cost">Costo <span class="sort-arrow">↕</span></th>
+                <th>Estado</th>
+                <th data-col="start_date">Fecha <span class="sort-arrow">↕</span></th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody><tr><td colspan="8" class="no-results">Cargando…</td></tr></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="rentals-pagination"></div>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- ══════════════════ MODALS ══════════════════ -->
+
+<!-- Modal: Nuevo Vehículo -->
+<div class="modal-overlay" id="modal-vehicle">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Registrar Vehículo</span>
+      <button class="modal-close" onclick="closeModal('modal-vehicle')">✕</button>
+    </div>
+    <form id="form-vehicle">
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Tipo de Vehículo</label>
+          <select class="form-control" id="nv-type" required>
+            <option value="">Seleccionar…</option>
+            <option value="car">Automóvil</option>
+            <option value="truck">Camioneta</option>
+            <option value="suv">SUV</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Matrícula</label>
+            <input class="form-control" id="nv-plate" type="text" placeholder="ABC-001" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Año</label>
+            <input class="form-control" id="nv-year" type="number" min="2000" max="2025" placeholder="2023" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Marca y Modelo</label>
+          <input class="form-control" id="nv-model" type="text" placeholder="Toyota Corolla" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Tarifa Diaria ($)</label>
+          <input class="form-control" id="nv-rate" type="number" min="1" step="0.01" placeholder="55.00" required>
+          <div class="form-hint">Tarifa base por día de alquiler</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" onclick="closeModal('modal-vehicle')">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Registrar Vehículo</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Nuevo Cliente -->
+<div class="modal-overlay" id="modal-customer">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Registrar Cliente</span>
+      <button class="modal-close" onclick="closeModal('modal-customer')">✕</button>
+    </div>
+    <form id="form-customer">
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Nombre Completo</label>
+          <input class="form-control" id="nc-name" type="text" placeholder="Ana García" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Correo Electrónico</label>
+          <input class="form-control" id="nc-email" type="email" placeholder="ana@correo.com" required>
+          <div class="form-hint">Se usa como identificador único</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Número de Licencia</label>
+          <input class="form-control" id="nc-license" type="text" placeholder="GT-001234" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" onclick="closeModal('modal-customer')">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Registrar Cliente</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Nueva Reserva -->
+<div class="modal-overlay" id="modal-rental">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Nueva Reserva</span>
+      <button class="modal-close" onclick="closeModal('modal-rental')">✕</button>
+    </div>
+    <form id="form-rental">
+      <div class="modal-body">
+        <div class="form-group">
+          <label class="form-label">Vehículo</label>
+          <select class="form-control" id="nr-plate" required>
+            <option value="">Seleccionar vehículo…</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Cliente</label>
+          <select class="form-control" id="nr-customer" required>
+            <option value="">Seleccionar cliente…</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Días</label>
+            <input class="form-control" id="nr-days" type="number" min="1" placeholder="3" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">km estimados</label>
+            <input class="form-control" id="nr-km" type="number" min="0" placeholder="150" required>
+          </div>
+        </div>
+        <div class="quote-preview" id="quote-preview">
+          <div class="qp-label">Costo estimado</div>
+          <div class="qp-value" id="qp-value">—</div>
+          <div class="qp-strat" id="qp-strategy">—</div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" onclick="closeModal('modal-rental')">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Confirmar Reserva</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Modal: Estrategia de Precio -->
+<div class="modal-overlay" id="modal-strategy">
+  <div class="modal">
+    <div class="modal-header">
+      <span class="modal-title">Estrategia de Precio</span>
+      <button class="modal-close" onclick="closeModal('modal-strategy')">✕</button>
+    </div>
+    <form id="form-strategy">
+      <div class="modal-body">
+        <p style="font-size:.85rem;color:var(--text2);margin-bottom:16px">Selecciona el algoritmo de cálculo de tarifa activo. El cambio afecta todas las reservas nuevas.</p>
+        <div id="strategy-list"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-ghost" onclick="closeModal('modal-strategy')">Cancelar</button>
+        <button type="submit" class="btn btn-primary">Aplicar Estrategia</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div id="toast-container"></div>
+
+<script src="/static/js/app.js"></script>
+</body>
+</html>
