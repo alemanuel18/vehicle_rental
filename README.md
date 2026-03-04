@@ -72,7 +72,7 @@ otras instalaciones de Python en tu sistema.
 **Linux / Mac:**
 ```bash
 # Entra a la carpeta raíz del proyecto
-cd Patrones_arquitectónicos_y_de_Diseño_Parte1
+cd alquiler_vehiculos_proyecto
 
 # Crea el entorno virtual
 python -m venv venv
@@ -84,7 +84,7 @@ source venv/bin/activate
 **Windows (PowerShell):**
 ```powershell
 # Entra a la carpeta raíz del proyecto
-cd Patrones_arquitectónicos_y_de_Diseño_Parte1
+cd alquiler_vehiculos_proyecto
 
 # Crea el entorno virtual
 python -m venv venv
@@ -125,7 +125,7 @@ flask
 ### Paso 3 — Correr el servidor web
 
 ```bash
-python -m Patrones_arquitectónicos_y_de_Diseño_Parte1.api.app
+python -m vehicle_rental.api.app
 ```
 
 Deberías ver:
