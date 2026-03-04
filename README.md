@@ -72,7 +72,7 @@ otras instalaciones de Python en tu sistema.
 **Linux / Mac:**
 ```bash
 # Entra a la carpeta raíz del proyecto
-cd alquiler_vehiculos_proyecto
+cd alquiler_vehiculos
 
 # Crea el entorno virtual
 python -m venv venv
